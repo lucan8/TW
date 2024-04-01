@@ -8,32 +8,31 @@
 
 <body>
     <header>
-        <table class="homeContainer">
-            <tr class="width:100%; height:100%">
-                <th class="userContainer">
-                    <div class="userText centered">Welcome, {{name}}</div>
-                    <div class="userText centered">Title: {{title}}</div>
-                </th>
-                <th class="titleContainer">
-                    <div class="titleText">Task Hero</div>
-                </th>
-                <th class="XPContainer">
-                    <div class="LVLTXT centered">LVL {{LVL}}</div>
-                    <div class="XPBar">
-                        <div class="XP">{{XP}}</div>
-                    </div>
-                </th>
-            </tr>
-        </table>
+        <div class="homeContainer">
+            <div class="userContainer">
+                <div class="userText centered">Welcome, {{name}}</div>
+                <div class="userText centered">Title: {{title}}</div>
+            </div>
+            <div class="titleContainer">
+                <div class="titleText">Task Hero</div>
+            </div>
+            <div class="XPContainer">
+                <div class="LVLTXT centered">LVL {{LVL}}</div>
+                <div class="XPBar">
+                    <div class="XP">{{XP}}xp</div>
+                </div>
+            </div>
+        </div>
     </header>
-
-    <div class="sidenav">
+    <nav class="sidenav">
         <a>Home</a>
+        <br>
         <a>Daily quest</a>
+        <br>
         <a>Tasks</a>
-    </div>
+    </nav>
     <main id="main_block">
-        {% block main %}{%ednblock%}
+        {% block main %}{%endblock%}
     </main>
 </body>
 <script>
