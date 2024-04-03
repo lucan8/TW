@@ -1,0 +1,3 @@
+#Test xp bar
+#Add directory to github
+#Add background color
