@@ -1,0 +1,42 @@
+td, th, table{
+    border:solid black 2px;
+}
+
+header{
+    text-align: center;
+    border:solid black;
+    background-color: white;
+    font-family: 'New Super Mario Font U', sans-serif;
+}
+
+footer{
+    text-align: center;
+    border:solid black;
+    background-color: white;
+    font-family: 'New Super Mario Font U', sans-serif;
+    font-size: 20px;
+}
+
+body{
+    border:solid black;
+    background-image: url("background-mario.png");
+}
+
+main{
+    border:solid black;
+    padding: 10px;
+    background-color: white;
+    font-family: 'New Super Mario Font U', sans-serif;
+}
+html{
+    margin-left:100px;
+    margin-right:100px;
+}
+
+a{
+    text-decoration: none;
+}
+nav>a{
+    border: dotted;
+    color:red;
+}
