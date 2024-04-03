@@ -1,2 +1,0 @@
-Position nav bar depending on the header
-Media queries(make progress bar stop shrinking as certain point)
