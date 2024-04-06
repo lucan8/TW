@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {%block title %} Home {%endblock%}
+{% block css_ext %} <link rel="stylesheet" href="static/styles/index.css"/>{% endblock %}
+{% block js_link %} <script type="module" src="static/scripts/index.js"></script> {% endblock %}
 
 {% block main %}
-
+<main class="index_main">
+    <header class="index_header">Daily Quests</header>
+</main>
 {% endblock %}

@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="static/styles/layout.css"/>
-    <!--See if this actually works-->
-    <script type="text/javascript" src="static/scripts/layout.js"></script>
-    <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet">
-    <link rel="icon" href="static/pictures/superhero.png"></i>
+    {% block css_ext %} {% endblock %}
+    {% block js_link %} {% endblock %}
+    <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet"/>
+    <link rel="icon" href="static/pictures/superhero.png"/>
+
     <title>Task Hero- {%block title%} {%endblock%} </title>
 
 </head>
 
-<body>
-    <header>
+<body class="layout_body">
+    <header class="layout_header">
         <div class="userContainer">
             <div class="userText centered">Welcome, {{name}}</div>
             <div class="userText centered">Title: {{title}}</div>
@@ -26,35 +27,17 @@
             </div>
         </div>
     </header>
-    <main id="main_block">
+    <main class="layout_main">
         <button class="dropBtn">rerever</button>
         <nav class="sidenav">
             <a>Home</a>
             <a>Daily quest</a>
             <a>Tasks</a>
         </nav>
-        <article>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend ex felis, nec congue est semper ut. Vestibulum ligula sem, commodo eu sagittis ac, sagittis ut nunc. In at lacinia libero. Proin in rhoncus nibh, in sollicitudin erat. Fusce fermentum semper nisi, et lacinia justo semper pellentesque. Aenean consequat tortor quam, vel lobortis risus viverra a. Integer rutrum massa condimentum nulla pretium, ac posuere quam laoreet. Vestibulum urna magna, pharetra sit amet mauris feugiat, pellentesque hendrerit libero. Vivamus non neque euismod, mattis lacus nec, dignissim diam. Vestibulum sit amet lacus turpis. Donec pretium diam viverra sollicitudin egestas. In viverra, lectus et hendrerit tincidunt, neque ante semper quam, at porttitor mauris diam in quam. Curabitur laoreet vestibulum dapibus. Donec mauris ligula, condimentum quis felis viverra, luctus condimentum elit.
-
-Nam est nisi, elementum id cursus ut, tempus in sem. Integer fringilla tortor at tortor accumsan, eu pulvinar magna eleifend. Vivamus pulvinar pellentesque massa, at volutpat felis pharetra sagittis. Donec dictum diam vel ornare varius. Cras auctor risus sem, ornare vehicula elit iaculis ac. Nulla facilisi. Phasellus tristique massa euismod volutpat luctus. Aliquam nec ipsum sapien. Vestibulum efficitur a lorem ut gravida. Aliquam ut purus vel sem convallis laoreet. Ut eu ipsum quis lorem eleifend viverra. Mauris et ante finibus, gravida nibh vel, volutpat urna. Pellentesque ut rhoncus mi. Phasellus nec pellentesque eros. Nulla faucibus, sem eu finibus mattis, augue odio interdum metus, id euismod odio mi commodo nisi. Sed feugiat tortor id venenatis faucibus.
-
-Quisque vel nibh a purus tempor porttitor vel a nibh. Suspendisse placerat eros lacus. Praesent tincidunt ligula ac justo placerat, non mattis diam facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas congue imperdiet est. Nam facilisis rutrum turpis sed congue. Vestibulum bibendum ipsum non elit porta pellentesque in eget libero. Mauris ac volutpat magna. Maecenas hendrerit orci id lectus porttitor vestibulum. Etiam tristique porta leo a maximus. Donec massa leo, condimentum nec lectus eget, finibus interdum nisi. Proin finibus, nisi sit amet viverra mattis, tortor arcu tempor nisl, ut ultricies felis lectus eget risus. Etiam dapibus lorem quis fermentum vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis nec massa auctor, tincidunt est vel, convallis mi.
-
-Quisque et rhoncus sem, nec consequat nibh. Nunc lectus urna, bibendum eget hendrerit condimentum, accumsan in dolor. Etiam venenatis risus id enim auctor, id elementum libero finibus. Suspendisse vulputate augue vitae semper tempus. Morbi enim est, ultrices vel nulla id, pulvinar dictum nulla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse porttitor, leo convallis tempus hendrerit, lacus elit vestibulum justo, vel consectetur odio erat ullamcorper mauris. Vestibulum luctus auctor enim sed pretium. In in sodales turpis. Phasellus odio augue, auctor vel nunc non, porta dignissim purus. Vestibulum a turpis mauris. Pellentesque id tellus in neque elementum mattis vel non erat. Curabitur consectetur nisl magna, ut fringilla turpis sagittis non. Sed ultrices urna sed accumsan dapibus. Duis velit neque, volutpat at lorem eget, rhoncus volutpat metus. Fusce eget lacus sed felis euismod sodales a eget dui.
-
-Sed eget ante feugiat, maximus odio eget, feugiat velit. Aenean at sapien sapien. Morbi bibendum blandit finibus. Suspendisse id blandit dui, quis aliquam velit. Vivamus nisi orci, finibus luctus semper in, porttitor quis urna. Suspendisse vitae elit facilisis, luctus elit ut, porta tortor. Duis faucibus elit in metus vestibulum, vitae ultricies libero luctus. Cras eu eros luctus mi aliquet imperdiet. Aenean rutrum tincidunt gravida.
-
-Proin non mauris magna. Nunc sed odio nec ex semper aliquet. Morbi suscipit consequat rutrum. Sed laoreet, nunc at ultricies dapibus, tortor dui feugiat lorem, sed fringilla urna dui sit amet dolor. Proin at lorem vitae elit varius tincidunt et eget nisi. Praesent non neque porttitor, lacinia ipsum eget, consequat libero. Pellentesque porta enim in dolor faucibus venenatis. Sed eget fringilla nibh.
-
-Pellentesque aliquam venenatis vehicula. Nam ullamcorper odio ut ligula volutpat consequat. Maecenas sed enim eu ligula tempus porttitor quis quis est. Donec eu sem vel risus feugiat feugiat nec in ipsum. Etiam sit amet purus eget odio porttitor ultrices sit amet ac ante. Etiam eu tempus ipsum, vitae fringilla sem. Curabitur eu massa mattis, convallis ante eget, dignissim orci. Mauris accumsan aliquet ante ut tristique.
-
-Pellentesque orci metus, elementum non hendrerit non, posuere eu tortor. Pellentesque fermentum quis massa eget placerat. Suspendisse potenti. Nullam scelerisque nulla est, at feugiat est euismod eget. Ut scelerisque quam ac leo scelerisque, eget mattis dolor malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed sit amet tempor neque, in tincidunt turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque consectetur nunc ullamcorper dui fermentum, in facilisis risus sagittis. Praesent at interdum sem, id tristique purus. Duis et pretium nunc, et congue tellus. Nunc metus enim, ullamcorper maximus odio ac, pharetra rhoncus libero. Fusce porta tellus sit amet quam blandit placerat. Praesent lobortis ac felis sit amet pulvinar. Phasellus ultrices nibh at dolor egestas pretium. In id gravida odio.
-
-Nam nisi odio, mattis non risus et, vestibulum lacinia erat. Nulla sed urna augue. Sed nunc tellus, sodales in justo eget, elementum blandit dolor. Nulla leo est, commodo eget euismod in, volutpat ullamcorper libero. Morbi id mauris ut lectus eleifend scelerisque. Integer pretium arcu eros, ac maximus nisl fermentum at. Aenean tristique lobortis nulla non dignissim. Proin imperdiet molestie nulla in vestibulum. In eu felis vel arcu tincidunt malesuada varius nec turpis.
-
-Sed congue rutrum sapien, in pulvinar neque auctor eu. Cras gravida urna ultricies quam auctor, eget fringilla enim auctor. Nunc convallis urna quis sem suscipit accumsan. Nunc vitae suscipit lacus. Praesent quis aliquet ante, sit amet congue augue. Maecenas pellentesque est eget lorem vulputate, et varius nisl ultrices. Vivamus ut eleifend diam, vel commodo felis. Donec bibendum metus eu nunc consectetur, quis accumsan orci viverra. Vestibulum eu euismod nisl, vitae condimentum augue.
+        <article class="layout_article">
+           {% block main %} {% endblock %}
         </article>
     </main>
-    <footer>Footer</footer>
+    <footer class="layout_footer">Footer</footer>
 </body>
 </html>
