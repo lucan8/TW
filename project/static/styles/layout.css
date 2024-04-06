@@ -1,7 +1,9 @@
 html{
     height: 100%;
+    font-family: 'ArcadeClassic', sans-serif;
+    background-color: #ADD8E6;
 }
-body{
+.layout_body{
     display: grid;
     grid-template-areas: "header"
                           "main"
@@ -9,15 +11,15 @@ body{
     grid-template-rows: 1fr 6fr 1fr;
     height: 100%;
 }
-header{
+.layout_header{
     animation-name: BorderChangeColor;
     animation-duration: 100s;
     animation-iteration-count: infinite;
-    background-color: #ADD8E6;
     border: ridge 0.8vw orange;
     box-shadow: 5px -3px 5px  gray;
     display: flex;
-    width: 100%;
+    grid-area: header;
+    width: 98.5%;
 }
 
 @keyframes BorderChangeColor{
@@ -44,7 +46,6 @@ header{
 .userText{
     font-size: 1.5cqw;
     flex-shrink: inherit;
-    font-family: 'ArcadeClassic', sans-serif;
     text-align: left;
 }
 .centered{
@@ -70,7 +71,6 @@ header{
 
 .LVLTXT{
     font-size: 1.5cqw;
-    font-family: 'ArcadeClassic', sans-serif;
 }
 
 .XPBar{
@@ -84,29 +84,27 @@ header{
 .XP{
     background-color: lightgreen;
     font-size: 1cqw;
-    font-family: 'ArcadeClassic', sans-serif;
     height: inherit;
     width: 0%;
 }
-main{
+.layout_main{
     display:flex;
+    grid-area: main;
 }
 
 .sidenav{
+    border:double black 0.8vw;
+    box-shadow: -2px 3px 5px black;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    background-color: gray;
-    border:double black 0.8vw;
-    background-color: #ADD8E6;
     grid-area: nav;
+    justify-content: space-around;
 }
 
 .sidenav > a{
     box-shadow: inset 0 0 0 0 #50C878;
     border:ridge black 0.5vw;
     cursor: pointer;
-    transition: ease-out 0.5s;
     text-align: center;
     font-size: 1.2vw;
     transition: ease-out 0.5s;
@@ -120,7 +118,7 @@ main{
     display: none;
     grid-area: btn;
 }
-article{
+.layout_article{
     grid-area: art;
     text-align: center;
     width: 100%;
@@ -129,7 +127,7 @@ article{
 /*Make this with js (onclick) after presentation*/
 @media screen and (max-width < 600) and (max-height < 700){
     /*Changing layout of main to grid to support both columns and rows*/
-    main{
+    .layout_main{
         display: grid;
         grid-template-areas: "btn art"
                              "nav art";
@@ -154,13 +152,13 @@ article{
         display: flex;
     }
 }
-footer{
-    border:dashed;
+.layout_footer{
+    grid-area: footer;
     text-align: center;
     width: 100%;
 }
 
-header, .sidenav, footer{
+.layout_header, .sidenav, .layout_footer{
     animation-name: BorderChangeColor;
     animation-duration: 100s;
     animation-iteration-count: infinite;
