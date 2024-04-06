@@ -1,7 +1,7 @@
 html{
     height: 100%;
     font-family: 'ArcadeClassic', sans-serif;
-    background-color: #ADD8E6;
+    background-color: #E2DFD2;
 }
 .layout_body{
     display: grid;
@@ -15,6 +15,7 @@ html{
     animation-name: BorderChangeColor;
     animation-duration: 100s;
     animation-iteration-count: infinite;
+    background-color: #ADD8E6;
     border: ridge 0.8vw orange;
     box-shadow: 5px -3px 5px  gray;
     display: flex;
@@ -93,6 +94,7 @@ html{
 }
 
 .sidenav{
+    background-color: #ADD8E6;
     border:double black 0.8vw;
     box-shadow: -2px 3px 5px black;
     display: flex;
@@ -111,7 +113,7 @@ html{
 }
 
 .sidenav > a:hover{
-    box-shadow: inset 400px 0 0 0 #50C878;
+    box-shadow: inset 400px 0 0px 0px #50C878;
 }
 
 .dropBtn{
@@ -131,28 +133,35 @@ html{
         display: grid;
         grid-template-areas: "btn art"
                              "nav art";
-        grid-template-columns: 0.5fr 8fr;
-        grid-template-rows: 0.5fr 7fr;
+        grid-template-columns: 0.8fr 8fr;
+        grid-template-rows: 0.44fr 7fr;
     }
     .dropBtn{
+        border-radius: 1vw;
         display: block;
-        font-size: 1vw;
-        background-color: blue;
+        font-size: 1.5vw;
+        text-align: center;
     }
-    
+    #menu_img{
+        float:right;
+        height: 100%;
+        width: 25%;
+    }
     .sidenav{
-        display: none;
+        opacity: 0;
+        transition-property: opacity, visibility;
+        transition-duration: 0.4s, 0.4s;
+        visibility: hidden;
     }
 
-    .dropBtn:hover + .sidenav{
-        display: flex;
-    }
-    
-    .sidenav:hover{
-        display: flex;
+    .dropBtn:hover + .sidenav, .sidenav:hover{
+        opacity: 1;
+        transition-duration: 0.4s, 0.4s;
+        visibility: visible;
     }
 }
 .layout_footer{
+    font-size: 1.5vw;
     grid-area: footer;
     text-align: center;
     width: 100%;

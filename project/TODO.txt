@@ -1,2 +1,0 @@
-#Make dropdown button nicer
-#See more info about box shadow
