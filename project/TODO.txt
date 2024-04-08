@@ -1,4 +1,0 @@
-#Maybe make a div dropdown for the elem
-#Fetch request
-#Json
-#About-us sidebar
