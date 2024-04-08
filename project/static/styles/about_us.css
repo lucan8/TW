@@ -1,0 +1,27 @@
+html{
+    height: 100%;
+
+}
+
+body{
+    height:100%;
+}
+
+header{
+    height: 10%;
+}
+
+h1{
+    text-align: center;
+    border-width: 2px;
+    border-color: black;
+    border-style: dashed;
+    box-shadow: 0 0 5px 5px;
+}
+
+article{
+    margin: 1%;
+    box-shadow: 0 0 5px 5px;
+    height: 80%;
+    font-size: 1.5vw;
+}

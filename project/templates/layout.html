@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="static/styles/layout.css"/>
+    <link rel="icon" href="static/pictures/superhero.png"/>
     {% block css_ext %} {% endblock %}
     {% block js_link %} {% endblock %}
     <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet"/>
-    <link rel="icon" href="static/pictures/superhero.png"/>
 
     <title>Task Hero- {%block title%} {%endblock%} </title>
 
@@ -14,16 +14,16 @@
 <body class="layout_body">
     <header class="layout_header">
         <div class="userContainer">
-            <div class="userText centered">Welcome, {{name}}</div>
-            <div class="userText centered">Title: {{title}}</div>
+            <div class="userText">Welcome, {{name}}</div>
+            <div class="userText">Title: {{title}}</div>
         </div>
         <div class="titleContainer">
             <div class="titleText">Task Hero</div>
         </div>
         <div class="XPContainer">
-            <div class="LVLTXT centered" id="LVL">LVL {{LVL}}</div>
+            <div id="LVL">{{LVL}}</div>
             <div class="XPBar">
-                <div id="XP" class="XP">xp {{XP}}</div>
+                <div id="XP">{{XP}}</div>
             </div>
         </div>
     </header>
@@ -38,6 +38,13 @@
            {% block main %} {% endblock %}
         </article>
     </main>
-    <footer class="layout_footer">I love plagiarism(Footer)</footer>
+    <footer class="layout_footer">
+        I love plagiarism(Footer)
+        <a href="about_us">About us</a>
+    </footer>
 </body>
+<script>
+    
+</script>
 </html>
+
