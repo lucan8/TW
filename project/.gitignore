@@ -2,3 +2,6 @@
 __pycache__
 *.js
 *.txt
+*.py
+*.db
+templates/index.html

@@ -2,28 +2,27 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="static/styles/layout.css"/>
+    <link rel="stylesheet" href="static/styles/index.css"/>
+    <script type="module" src="static/scripts/index.js"></script>
     <link rel="icon" href="static/pictures/superhero.png"/>
-    {% block css_ext %} {% endblock %}
-    {% block js_link %} {% endblock %}
     <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet"/>
 
-    <title>Task Hero- {%block title%} {%endblock%} </title>
-
+    <title>Task Hero- Daily </title>
 </head>
 
 <body class="layout_body">
     <header class="layout_header">
         <div class="userContainer">
-            <div class="userText">Welcome, {{name}}</div>
-            <div class="userText">Title: {{title}}</div>
+            <div class="userText">Welcome, Cristi</div>
+            <div class="userText">Title: Noob</div>
         </div>
         <div class="titleContainer">
             <div class="titleText">Task Hero</div>
         </div>
         <div class="XPContainer">
-            <div id="LVL">{{LVL}}</div>
+            <div id="LVL">1</div>
             <div class="XPBar">
-                <div id="XP">{{XP}}</div>
+                <div id="XP">0</div>
             </div>
         </div>
     </header>
@@ -35,7 +34,10 @@
             <a>Tasks</a>
         </nav>
         <article class="layout_article">
-           {% block main %} {% endblock %}
+            <!--This would normally be in derived page but for this part is here-->
+            <main class="index_main">
+                <header class="index_header">Daily Quests</header>
+            </main>
         </article>
     </main>
     <footer class="layout_footer">
