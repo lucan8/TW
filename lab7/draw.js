@@ -87,8 +87,9 @@ function getNthChild(element, n) {
 
 function drawPixel(row, col, color) {
    let pixel = document.getElementsByClassName('r' + row + ' c' + col)[0];
+   console.log(pixel);
 
-   if (pixel.length)
+   if (pixel)
       pixel.style.backgroundColor = color;
 /*
    5. Colorați celula de la linia 'row' și coloana 'col' cu culoarea `color'.
@@ -97,15 +98,11 @@ function drawPixel(row, col, color) {
 
 function drawLine(r1, c1, r2, c2, color) {
    if (c2 == c1) //Linie verticala
-      for (let i = r1; i < r2; ++i)
+      for (let i = r1; i <= r2; ++i)
          drawPixel(i, c1, color);
    else if (r2 == r1) //Linie orizontala
-      for (let i = c1; i < c2; ++i)
+      for (let i = c1; i <= c2; ++i)
          drawPixel(r1, i, color);
-      else{
-         let slope = (r2 - r1) / (c2 - c1);
-
-      }
 /*
    6. Desenați o linie (orizontală sau verticală) de la celula aflată 
    pe linia 'r1', coloana 'c1' la celula de pe linia 'r2', coloana 'c2'
@@ -116,11 +113,11 @@ function drawLine(r1, c1, r2, c2, color) {
 }
 
 function drawRect(r1, c1, r2, c2, color) {
-   if (r2 > r1 || c2 > c1){
+   if (r2 < r1 || c2 < c1){
       alert("Rows or columns incorrectly incputed");
       return;
    }
-   for (let row = r1; row < r2; ++row)
+   for (let row = r1; row <= r2; ++row)
       drawLine(row, c1, row, c2, color);
 /*
    7. Desenați, folosind culoarea 'color', un dreptunghi cu colțul din 
@@ -132,11 +129,11 @@ function drawRect(r1, c1, r2, c2, color) {
 function drawPixelExt(row, col, color) {
    let table = document.getElementById('drawTable');
 
-   if ((row >= 0 && row <= table.rows.length) && (col >= 0 && col <= table.rows[row].cells.length))
+   if ((row >= 0 && row < table.rows.length) && (col >= 0 && col < table.rows[row].cells.length))
       drawPixel(row, col, color);
    else{
-      extendCol(table, row);
-      extendRow(col);
+      extendCol(table, row, color);
+      extendRow(table, col, color);
    }
 /*
    8. Colorați celula de la linia 'row' și coloana 'col' cu culoarea 'color'.
@@ -144,23 +141,46 @@ function drawPixelExt(row, col, color) {
 */
 }
 
-function extendCol(table, rowFin){
-   const nr_new_rows = rowFin - table.rows.length;
+//Adds rows
+function extendCol(table, rowFin, color){
+   const nr_initial_rows = table.rows.length;
+   const nr_new_rows = rowFin - nr_initial_rows + 1;
    const nr_col = table.rows[0].cells.length;
    
+   console.log(nr_initial_rows, nr_new_rows, nr_col);
    for (let i = 0; i < nr_new_rows; ++i){
       let new_row = table.insertRow();
-      for (let j = 0; j < nr_col; ++j)
-         new_row.insertCell();
+      let row_index = nr_initial_rows + i;
+
+      for (let col_index = 0; col_index < nr_col; ++col_index){
+         let new_cell = new_row.insertCell()
+
+         new_cell.classList.add('r' + row_index);
+         new_cell.classList.add('c' + col_index);
+
+         drawPixel(row_index, col_index, color);
+      }
    }
 }
 
-function extendRow(table, colFin){
-   const nr_new_col = colFin - table.rows[0].cells.length;
-   
+//Adds columns
+function extendRow(table, colFin, color){
+   const nr_initial_col = table.rows[0].cells.length;
+   const nr_new_col = colFin - nr_initial_col + 1;
+   const nr_rows = table.rows.length;
+
+
    for (let i = 0; i < nr_new_col; ++i){
-      for (row of table.rows)
-         row.insertCell();
+      let col_index = nr_initial_col + i;
+
+      for (let row_index = 0; row_index < nr_rows; ++row_index){
+         let new_cell = table.rows[row_index].insertCell();
+
+         new_cell.classList.add('r' + row_index);
+         new_cell.classList.add('c' + col_index);
+
+         drawPixel(row_index, col_index, color);
+      }
    }
 }
 
@@ -170,42 +190,53 @@ function colorMixer(colorA, colorB, amount){
    return parseInt(cA + cB);
 }
 
-function drawPixelAmount(row, col, color, amount) {
-   /* 
-   9. Colorați celula la linia 'row' și coloana 'col' cu culoarea 'color'
-   în funcție de ponderea 'amount' primită ca argument (valoare între 0 și 1). 
-   Dacă 'amount' are valoarea:
-   1, atunci celula va fi colorată cu 'color'
-   0, atunci celula își va păstra culoarea inițială
-   pentru orice altă valoare, culoarea inițială și cea dată de argumentul 
-   'color' vor fi amestecate. De exemplu, dacă ponderea este 0.5, atunci 
-   culoarea inițială și cea nouă vor fi amestecate în proporții egale (50%). 
-   */
+function drawPixelAmount(row, col, color, amount){
+   let newColorArray = color.match(/\d+/g);
 
-   /*   
-   Hint 1: folosiți funcția colorMixer de mai sus.
+   console.log(newColorArray);
 
-   Hint 2: pentru un argument 'color' de forma 'rgb(x,y,z)' puteți folosi
-   let newColorArray = color.match(/\d+/g); 
-   pentru a obține un Array cu trei elemente, corespunzătoare valorilor
-   asociate celor trei culori - newColorArray = [x, y, z]
-   
-   Hint 3: pentru a afla culoarea de fundal a unui element puteți folosi
-   metoda getComputedStyle(element). Accesând proprietatea backgroundColor 
-   a obiectului întors, veți obține un string de forma 'rgb(x,y,z)'.
-   */
+   let pixel = document.getElementsByClassName('r' + row + ' c' + col)[0];
+   let oldColorArray = getComputedStyle(pixel).backgroundColor.match(/\d+/g);
+
+   pixel.style.backgroundColor = 'rgb(' + 
+   colorMixer(newColorArray[0], oldColorArray[0], amount) + ',' +
+   colorMixer(newColorArray[1], oldColorArray[1], amount) + ',' +
+   colorMixer(newColorArray[2], oldColorArray[2], amount) + ')'; 
 }
 
 function delRow(row) {
-/*
-   10. Ștergeți linia cu numărul 'row' din tabla de desenat.
-*/
+   let table = document.getElementById("drawTable");
+   const nr_rows = table.rows.length;
+   const nr_col = table.rows[row].cells.length;
+
+   if (row < 0 || row >= nr_rows){
+      alert("Row index invalid(" + row + ")");
+      return;
+   }
+   console.log(row, nr_rows, nr_col)
+   for (let row_index = row + 1; row_index < nr_rows; ++row_index){
+      let curr_row = table.rows[row_index].cells;
+      for (let col_index = 0; col_index < nr_col; ++col_index)
+         console.log(curr_row[col_index].classList.replace('r' + row_index, 'r' + (row_index - 1)));
+   }
+
+   table.deleteRow(row);
 }
 
 function delCol(col) {
-/*
-   10. Ștergeți coloana cu numărul 'col' din tabla de desenat.
-*/
+   let table = document.getElementById("drawTable");
+   const nr_col = table.rows[0].cells.length;
+
+   if (col < 0 || col >= nr_col){
+      alert("Column index invalid(" + col + ")");
+      return;
+   }
+
+   for (row of table.rows){
+      for (let col_index = col + 1; col_index < nr_col; ++col_index)
+         console.log(row.cells[col_index].classList.replace('c' + col_index, 'c' + (col_index - 1)));
+      row.deleteCell(col);
+   }
 }
 
 function shiftRow(row, pos) {
@@ -255,7 +286,14 @@ window.onload = function(){
    const rows = 12;
    const cols = 12;	
    drawTable(rows, cols);
-   drawRect(0, 0, 3, 2, 'blue');
+   /*
+   drawRect(0, 0, 2, 3, 'blue');
+   drawPixelExt(14, 14, "red");
+
+   drawPixelAmount(0, 0, "rgb(255,0,0)", 0.5);
+*/
+   delRow(0);
+   delCol(0);
    
 }
 
