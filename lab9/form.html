@@ -8,10 +8,123 @@
    </head>
    <body>
      <h3>FORMULAR PENTRU INTRAREA ÎN SISTEMUL SOLAR</h3>
-      
      <div id="container"> 
-       <form>
-       </form>
+      <form method="post" action="Earth">
+        <fieldset>
+          <legend>Date personale</legend>
+          <label>
+            Nume complet: <input required type="text" min="3" max="30">
+          </label>
+
+          <label>
+            ID unic: <input required type="text" min="8" max="20">
+          </label>
+          <label>
+            Rasa: 
+            <select>
+              <option selected>Please choose an option</option>
+              <option>Autobot</option>
+              <option>Daimons</option>
+              <option>Deep Ones</option>
+              <option>Experiment</option>
+              <option>Goa'uld</option>
+              <option>Hutt</option>
+              <option>Jawa</option>
+              <option>Kryptonian</option>
+              <option>Mandalorians</option>
+              <option>Martian</option> 
+              <option>Protoss</option>
+              <option>Rodian</option>
+              <option>Romulan</option>
+              <option>Tleilaxu</option>
+              <option>Vogon</option>
+              <option>Wookie</option>
+              <option>Xenu</option>
+              <option>Yeti</option>
+              <option>Zerg</option>
+            </select>
+          </label>
+          <label>
+            Data nasterii: <input required type="date" min="1800-01-01" max="2024-05-13">
+          </label>
+          <label>
+            Credit social: <input required id="range_creds" type="range" min="0" max="2000" step="50">
+                          <output id="creds"></output>
+          </label>
+          <label>
+            Fotografie: <input type="file" accept="image/*">
+          </label>
+        </fieldset>   
+
+        <fieldset>
+          <legend>Contact</legend>
+          <label>
+            Galaxie provenienta: <input required type="text">
+          </label>
+          <label>
+            Planeta provenienta: <input required type="text">
+          </label>
+          <label>
+            Adresa: <textarea required></textarea>
+          </label>
+          <label>
+            Email: <input required type="email">
+          </label>
+          <label>
+            Telefon: <input required type="tel">
+          </label>
+          <label>
+            Web url: <input required type="url">
+          </label>
+        </fieldset>
+          
+        <fieldset>
+          <legend>Semnalente fizice</legend>
+          <label>
+            Inaltime(10-300cm): <input required type="number" min="10" max="300">
+          </label>
+          <label>
+            Greutate(1-500kg): <input required type="number" min="1" max="500">
+          </label>
+          <label>
+            Nr membre: <input required type="number">
+          </label>
+          <label>
+            Nr ochi: <input required type="number">
+          </label>
+          <label>
+            Culoare <input type="color">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Vizita</legend>
+          <label>
+            Data sosire: <input type='date' min="2024-05-13" max="2034-05-13" required>
+          </label>
+          <label>
+            Timp estimat sosire: <input type='time' required>
+          </label>
+
+          <label>
+            Sedere: <input type='radio' value="Temporara" name="hey" checked>
+                    <input type='radio' value="Permanenta" name="hey">
+          </label>
+
+          <label id="scop_vizita">
+            Scopul vizitei:
+            <span>Afaceri<input type='checkbox' value="Afaceri"></span>
+            <span>Turism<input type='checkbox' value="Turism"></span>
+            <span>Social<input type='checkbox' value="Social"></span>
+            <span>Invazie<input type='checkbox' value="Invazie" checked><span>
+              <br>
+            <span>Altul<input type='checkbox' value="Altul"></span>
+          </label>
+          <label>
+            Comentarii: <textarea ></textarea>
+          </label>
+        </fieldset>
+      </form>
      </div>
    </body>
 </html>

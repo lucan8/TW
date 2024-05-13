@@ -23,7 +23,24 @@ body {
   background-color: #201B3C;
 }
 
-
+form {
+  display: flex;
+  flex-direction: column;
+}
+fieldset{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: space-between;
+}
+label{
+  display: flex;
+  margin-top: 5%;
+}
+#scop_vizita{
+  display: flex;
+  flex-direction: column;
+}
 div {
   margin: 12px;
   padding: 10px;
@@ -39,4 +56,5 @@ textarea {
   resize: none;
   margin-top: 10px;
 }
+
   
