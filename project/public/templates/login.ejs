@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' href="../static/styles/layout.css">
+        <link rel='stylesheet' href="../static/styles/login.css">
+        <script type="text/javascript" src="../static/styles/login.js"></script>
+        <link rel="icon" href="../../static/pictures/superhero.png"/>
+        <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet"/>
+        <title>Task Hero-Login</title>
+    </head>
+    <body id="login_body">
+        <header>
+            <h1>Welcome to task hero!</h1>
+        </header>
+        <main class="login_main">
+            <aside></aside>
+            <form class="login_form" method="post" action="/login">
+                <h3><a href="/register">Register</a> | Login</h3>
+                <input class="login_input" type="text" placeholder="name" id="name" title="No white spaces!">
+                <input class="login_input" type="password" placeholder="password" id="password" title="Must contain at least one special character(symbol or number)">
+                <input class="login_submit" type="submit" id="submit">
+            </form>
+            <aside></aside>
+        </main>
+        <%-include('layout/layout_footer')%>
+    </body>
+</html>
