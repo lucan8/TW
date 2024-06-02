@@ -14,12 +14,15 @@
         </header>
         <main class="login_main">
             <aside></aside>
-            <form class="login_form" method="post" action="/login">
-                <h3><a href="/register">Register</a> | Login</h3>
-                <input class="login_input" type="text" placeholder="name" id="name" title="No white spaces!">
-                <input class="login_input" type="password" placeholder="password" id="password" title="Must contain at least one special character(symbol or number)">
-                <input class="login_submit" type="submit" id="submit">
-            </form>
+            <div class="form_container">
+                <form class="login_form" method="post" action="/login">
+                    <h3><a href="/register">Register</a> | Login|<a href="/about_us">About us</a></h3>
+                    <input class="login_input" type="email" name ="email" placeholder="email" id="email">
+                    <input class="login_input" type="password" name="password" placeholder="password" id="password" title="Must contain at least one special character(symbol or number)">
+                    <input id="dummy_submit" type="submit" id="submit">
+                </form>
+                <button class="login_submit" type=submit>submit</button>
+            </div>
             <aside></aside>
         </main>
         <%-include('layout/layout_footer')%>
