@@ -77,7 +77,7 @@ const isAuth = (req, res, next) =>{
     if (req.session.user_id)
         next();
     else
-        redirect('/login');
+        res.redirect('/login');
 }
 
 async function getUser(email){
@@ -93,7 +93,6 @@ async function createUser(name, email, password){
 
 async function getMaxUserId(){
     const max_id = (await myQuery("SELECT MAX(user_id) AS max_id FROM users"))[0];
-    console.log('max_id: ', max_id)
 
     if (max_id)
         return max_id.max_id;
@@ -114,18 +113,24 @@ app.get('/about_us', (req, res) => {
 
 //MAKE USER AUTH ROUTER
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', {email: '', password: '', err_msg : ''});
 });
 
 app.post('/login', async (req, res) => {
+    const {email, password} = req.body;
     try{
-        const user = await getUser(req.body.email);
-        if (user && await bcrypt.compare(req.body.password, user.password)){
+        const user = await getUser(email);
+        //No matching email, sending err msg
+        if (!user)
+            res.render('login', {email: email, password: password, err_msg : 'Incorrect email'});
+        //Password does not match, sending err msg
+        else if (!(await bcrypt.compare(password, user.password)))
+            res.render('login', {email: email, password: password, err_msg : 'Incorrect password'});
+
+        else {//Creating session for user and redirecting to home page
             req.session.user_id = user.user_id;
             res.redirect('/');
         }
-        else
-            res.redirect('/login');
     } catch(e){
         console.log(e);
         res.sendStatus(500);
@@ -137,8 +142,9 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
+    const {username, email, password} = req.body;
     try{
-        createUser(req.body.username, req.body.email, req.body.password)
+        await createUser(username, email, password)
         .then(()=>res.redirect('/login'));
     }
     catch(e){
@@ -148,8 +154,9 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/register/verif_email', async (req, res) =>{
+    const {email} = req.body;
     try{
-        const user = getUser(req.body.email);
+        const user = await getUser(email);
         if (user)
             res.send('Email in use!');
         else
@@ -163,19 +170,18 @@ app.post('/register/verif_email', async (req, res) =>{
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         console.log(err);
-    })
-    console.log(req.session);
+    });
     res.redirect('/login');
 });
 
 //MAKE DAILY_QUESTS ROUTER
 app.get('/daily_quests', isAuth, (req, res) => {
-    res.render('daily_quests.ejs');
+    res.render('daily_quests');
 });
 
 //MAKE TASKS ROUTER
 app.get('/tasks', isAuth, (req, res) => {
-    res.render('tasks.ejs');
+    res.render('tasks');
 });
 
 
