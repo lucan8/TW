@@ -86,11 +86,8 @@ async function getUser(email){
 
 //Returns true if user is succesfully created, false otherwise
 async function createUser(name, email, password){
-    if (await getUser(email)) //User exists -> nothing gets created
-        return 'Email in use!'
-
     const hashed_pass = await bcrypt.hash(password, 10);
-    myQuery("INSERT INTO users(user_id, username, email, password) VALUES(?, ?, ?, ?)",
+    return await myQuery("INSERT INTO users(user_id, username, email, password) VALUES(?, ?, ?, ?)",
                 [await getMaxUserId() + 1, name, email, hashed_pass]);
 }
 
@@ -140,20 +137,28 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    if (req.body.password == req.body.confirmation)
-        res.render('register', {message: "Passwords don't match!"})
     try{
-        const message = await createUser(req.body.username, req.body.email, req.body.password);
-        if (!message)
-            res.redirect('/login');
-        else
-            res.redirect('/register', message);
+        createUser(req.body.username, req.body.email, req.body.password)
+        .then(()=>res.redirect('/login'));
     }
     catch(e){
         console.log(e);
         res.sendStatus(500);
     }
 });
+
+app.post('/register/verif_email', async (req, res) =>{
+    try{
+        const user = getUser(req.body.email);
+        if (user)
+            res.send('Email in use!');
+        else
+            res.send({});
+    } catch(e){
+        console.log(e);
+        res.sendStatus(500)
+    }
+})
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
