@@ -13,7 +13,12 @@
             <main class="layout_main">
                 <%- include("layout/layout_side")%>
                 <article class="layout_article">
-                    <h5>Daily Quests</h5>
+                    <h5>Daily Quests- 5xp each</h5>
+                    <input type="text" placeholder="Quest Name" id="quest_name" name="quest_name">
+                    <button type="submit" id="add_quest">Add quest</button>
+                    <ul id="quests_list">
+
+                    </ul>
                 </article>
             </main>
         <%- include("layout/layout_footer") %>
