@@ -133,14 +133,15 @@ html{
 }
 .layout_article{
     grid-area: art;
-    text-align: center;
     font-size: 2vw;
     box-shadow: 1px 3px 5px black;
     height:99.5%;
     width: 100%;
+    text-align: start;
 }
 
 .layout_article > h5{
+    text-align: center;
     border-bottom:solid;
     margin: 0%;
     padding-bottom: 1%;
