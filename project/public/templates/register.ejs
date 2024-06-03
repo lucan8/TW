@@ -2,26 +2,28 @@
 <html>
     <head>
         <link rel='stylesheet' href="../static/styles/layout.css">
-        <link rel='stylesheet' href="../static/styles/login.css">
-        <script type="text/javascript" src="../static/scripts/auth.js"></script>
-        <link rel="icon" href="../../static/pictures/superhero.png"/>
+        <link rel='stylesheet' href="../static/styles/auth.css">
+        <script type="module" src="../static/scripts/register.js"></script>
+        <link rel="icon" href="../static/pictures/superhero.png"/>
         <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet"/>
         <title>Task Hero-Register</title>
     </head>
-    <body id="login_body">
+    <body id="auth_body">
         <header>
             <h1>Welcome to task hero!</h1>
         </header>
-        <main class="login_main">
+        <main id="auth_main">
             <aside></aside>
-            <form class="login_form" method="post" action="/register">
-                <h3>Register |<a href="/login">Login</a> |<a href="/about_us">About us</a></h3>
-                <input class="login_input" type="text" name="username" placeholder="username" id="username">
-                <input class="login_input" type="email" name ="email" placeholder="email" id="email">
-                <input class="login_input" type="password" name="password" placeholder="password" id="password" title="Must contain at least one special character(symbol or number)">
-                <input class="login_input" type="password" name="confirmation" placeholder="confirmation" id="confirmation">
-                <input class="login_submit" type="submit" id="submit">
-            </form>
+            <div id="form_container">
+                <form id="auth_form" method="post" action="/register">
+                    <h3>Register |<a href="/login">Login</a></h3>
+                    <div class="input_container"><input class="auth_input" type="text" name="username" placeholder="username" id="username"><img src="../static/pictures/red_cross.png" title="Incomplete username"></div>
+                    <div class="input_container"><input class="auth_input" type="text" name ="email" placeholder="email" id="email"><img src="../static/pictures/red_cross.png" title="Incomplete email"></div>
+                    <div class="input_container"><input class="auth_input" type="password" name="password" placeholder="password" id="password"><img src="../static/pictures/red_cross.png" title="Incomplete password"></div>
+                    <input type="submit" id="auth_submit" value="Register">
+                    <div id="submit_err"></div>
+                </form>
+            </div>
             <aside></aside>
         </main>
         <%-include('layout/layout_footer')%>
