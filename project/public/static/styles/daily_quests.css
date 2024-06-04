@@ -1,0 +1,22 @@
+.remove_quest{
+    margin-left: 15px;
+    border-radius: 10px;
+    transition: box-shadow 1s;
+    
+}
+
+.remove_quest:hover{
+    box-shadow: inset 400px 0px 0px 0px red,
+                      0px 0px 5px 1px gray;
+    color: white;
+    cursor: pointer;
+}
+
+#add_quest{
+    transition: box-shadow 1s;
+}
+#add_quest:hover{
+    box-shadow: inset 400px 0px 0px 0px #0096FF,
+                      0px 0px 5px 1px gray;
+    cursor: pointer;
+}
