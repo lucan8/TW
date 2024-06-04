@@ -229,7 +229,7 @@ app.post('/register/verif_email', async (req, res) =>{
         if (user)
             res.send('Email in use!');
         else
-            res.send({});
+            res.send(200);
     } catch(e){
         console.log(e);
         res.sendStatus(500)
