@@ -201,4 +201,14 @@ html{
     animation-iteration-count: infinite;
 }
 
+/*stuff used globally*/
+#err_div.hide{
+    opacity: 0;
+}
+#err_div{
+    background-color: #DC143C;
+    transition: opacity 1s 2s ease-in-out;
+    opacity: 1;
+}
+
 

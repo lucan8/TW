@@ -39,14 +39,6 @@
     justify-content: center;
 }
 
-#submit_err.hide{
-    opacity: 0;
-}
-#submit_err{
-    background-color: #DC143C;
-    transition: opacity 1s 2s ease-in-out;
-    opacity: 1;
-}
 
 .input_container > img{
     height: 2vw;
