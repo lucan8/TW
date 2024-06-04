@@ -4,7 +4,7 @@ const cross_src = '../static/pictures/red_cross.png';
 const symbols = '!@#$%^&*_-';
 
 window.onload = (e) =>{
-    var submit_err = document.getElementById('submit_err');
+    var err_div = document.getElementById('err_div');
 
     let input_containers = document.getElementsByClassName('input_container');
     const verifs = [verifUsername, verifEmail, verifPassword];
@@ -24,13 +24,13 @@ window.onload = (e) =>{
             if (input_cont.children[1].title != 'Valid'){
                 e.preventDefault();
 
-                submit_err.innerHTML = input_cont.children[1].title;
-                submit_err.classList.add('hide');
+                err_div.innerHTML = input_cont.children[1].title;
+                err_div.classList.add('hide');
                 
                 //Giving time for the animation to finish before removing the hide class and err_msg
                 setTimeout(() => {
-                    submit_err.classList.remove('hide');
-                    submit_err.innerHTML = '';
+                    err_div.classList.remove('hide');
+                    err_div.innerHTML = '';
                 }, 3000);
                 return;
             }
@@ -65,7 +65,6 @@ function verifEmail(email){
         res = httpReq.responseText;
         console.log(res);
     }
-    console.log(res);
     return res;
 }
 
