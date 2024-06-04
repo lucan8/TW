@@ -7,14 +7,13 @@ const mysql = require('mysql2');
 const session = require("express-session");
 const mySQLStore = require('express-mysql-session')(session);
 const path = require('path');
-const { Console } = require('console');
-//TO DO:Get user does not work yet...
-//TO DO: Make a custom query that prints the query string and returns only the first elem
+
+//Tabele vor fii create automat cand rulati codul
 const sql_options = {
     host:'localhost',
     user:'root',
     password:'1234',
-    database:'task_hero'
+    database: 'task_hero'
 };
 
 const session_store_options = {
@@ -37,7 +36,7 @@ const session_store_options = {
     // Whether or not to create the sessions database table, if one does not already exist:
     createDatabaseTable: true,
     schema: {
-        tableName: 'sessions_test',
+        tableName: 'sessions',
         columnNames: {
             session_id: 'session_id',
             expires: 'expires',
@@ -47,23 +46,12 @@ const session_store_options = {
 };
 
 const pool = mysql.createPool(sql_options).promise();
-const sessionStore = new mySQLStore(session_store_options, pool);
-
-const session_options = {
-    secret:'lorem sus',
-    store: sessionStore,
-    saveUninitialized: false,
-    resave: false,
-    cookie:{maxAge : 30 * 24 * 60 * 60 * 1000}
-};
 
 const app = express();
-
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended : false}))
-//Maybe set the store for this as well
-app.use(session(session_options))
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'public/templates'));
 
@@ -72,16 +60,54 @@ async function myQuery(q, wildcards){
     return (await pool.query(q, wildcards))[0];
 }
 
-//Think more about this
+//Creating the tables if needed
+//MAKE THIS FUNCTION
+myQuery(`CREATE DATABASE IF NOT EXISTS task_hero;`);
+myQuery(`CREATE TABLE IF NOT EXISTS users(
+        user_id int PRIMARY KEY NOT NULL,
+        username varchar(100) NOT NULL,
+        password varchar(255) NOT NULL,
+        email varchar(255) NOT NULL UNIQUE,
+        xp int NOT NULL DEFAULT 0);`
+       );
+myQuery(`CREATE TABLE IF NOT EXISTS daily_quests(
+        user_id	int NOT NULL,
+        d_quest_id int NOT NULL,
+        quest_name varchar(50) NOT NULL UNIQUE,        
+        quest_details varchar(100),
+        PRIMARY KEY(user_id, d_quest_id),
+        FOREIGN KEY(user_id) REFERENCES users(user_id)
+        );`
+       );
+       
+myQuery(`CREATE TABLE IF NOT EXISTS daily_quest_completion(
+        user_id	int NOT NULL,
+        date date NOT NULL,
+        nr_completed int NOT NULL DEFAULT 0,
+        nr_tasks int NOT NULL,
+        PRIMARY KEY(user_id, date),
+        FOREIGN KEY(user_id) REFERENCES users(user_id)
+        );`
+      )
+
+const sessionStore = new mySQLStore(session_store_options, pool);
+const session_options = {
+    secret:'lorem sus',
+    store: sessionStore,
+    saveUninitialized: false,
+    resave: false,
+    cookie:{maxAge : 30 * 24 * 60 * 60 * 1000}
+};
+app.use(session(session_options));
+
 const isAuth = (req, res, next) =>{
     if (req.session.user_id)
         next();
     else
         res.redirect('/login');
 }
-
 async function getUser(email){
-    return (await myQuery('SELECT * FROM users WHERE email = ?', [email]))[0];
+    return (await myQuery("SELECT * FROM users WHERE email = ?", [email]))[0];
 }
 
 //Returns true if user is succesfully created, false otherwise
@@ -91,15 +117,56 @@ async function createUser(name, email, password){
                 [await getMaxUserId() + 1, name, email, hashed_pass]);
 }
 
+async function removeUser(user_id){
+    await myQuery("DELETE FROM users WHERE user_id = ?",
+                  [user_id])[0];
+}
+
 async function getMaxUserId(){
-    const max_id = (await myQuery("SELECT MAX(user_id) AS max_id FROM users"))[0];
+    const max_id = (await myQuery("SELECT MAX(user_id) AS max_id FROM users"))[0].max_id;
 
     if (max_id)
-        return max_id.max_id;
+        return max_id;
     return 0;
 }
 
-app.listen(3000, ()=>{
+async function getQuest(user_id, quest_name){
+    return (await myQuery("SELECT * FROM daily_quests WHERE user_id = ? AND quest_name = ?",
+                          [user_id, quest_name]))[0];
+}
+
+async function getAllQuests(user_id){
+    let quests_aux = (await myQuery("SELECT quest_name FROM daily_quests WHERE user_id = ?",
+                      [user_id]));
+    let quests = [];
+    for (let q of quests_aux)
+        quests.push(q.quest_name);
+
+    return quests;
+}
+async function createQuest(user_id, quest_name){
+    await myQuery("INSERT INTO daily_quests(user_id, d_quest_id, quest_name) VALUES(?,?,?)",
+                  [user_id, await getMaxQuestId(user_id) + 1, quest_name])[0];
+}
+
+async function removeQuest(user_id, quest_name){
+    await myQuery("DELETE FROM daily_quests WHERE user_id = ? AND quest_name = ?",
+                  [user_id, quest_name])[0];
+}
+
+async function getMaxQuestId(user_id){
+    const max_id = (await myQuery("SELECT MAX(d_quest_id) AS max_id FROM daily_quests WHERE user_id = ?",
+                    [user_id]))[0].max_id;
+    console.log(max_id);
+
+    if (max_id)
+        return max_id;
+    return 0;
+}
+
+app.listen(3000, (err)=>{
+    if (err)
+        console.log(err);
     console.log("Listening on port 3000");
 });
 
@@ -111,10 +178,12 @@ app.get('/about_us', (req, res) => {
     res.render('about_us');
 });
 
+
 //MAKE USER AUTH ROUTER
 app.get('/login', (req, res) => {
     res.render('login', {email: '', password: '', err_msg : ''});
 });
+
 
 app.post('/login', async (req, res) => {
     const {email, password} = req.body;
@@ -144,7 +213,7 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
     const {username, email, password} = req.body;
     try{
-        await createUser(username, email, password)
+        createUser(username, email, password)
         .then(()=>res.redirect('/login'));
     }
     catch(e){
@@ -175,10 +244,36 @@ app.get('/logout', (req, res) => {
 });
 
 //MAKE DAILY_QUESTS ROUTER
-app.get('/daily_quests', isAuth, (req, res) => {
-    res.render('daily_quests');
+app.get('/daily_quests', isAuth, async(req, res) => {
+    res.render('daily_quests', {quests: await getAllQuests(req.session.user_id)});
 });
 
+app.post('/daily_quests/add', isAuth, async (req, res) =>{
+    const user_id = req.session.user_id;
+    const quest_name = req.body.quest_name;
+    try{
+        if (await getQuest(user_id, quest_name))
+            res.send('Task already exists!');
+        else{
+            await createQuest(user_id, quest_name);
+            res.sendStatus(200);
+        }
+    } catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+})
+app.post('/daily_quests/remove', isAuth, async (req, res) =>{
+    const user_id = req.session.user_id;
+    const quest_name = req.body.quest_name;
+    try{
+        await removeQuest(user_id, quest_name);
+        res.sendStatus(200);
+    } catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+})
 //MAKE TASKS ROUTER
 app.get('/tasks', isAuth, (req, res) => {
     res.render('tasks');
