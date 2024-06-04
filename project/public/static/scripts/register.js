@@ -12,12 +12,17 @@ window.onload = (e) =>{
     for (let i = 0; i < input_containers.length; ++i)
         input_containers[i].children[0].oninput = (event) =>{
             var err_msg;
-            err_msg = verifs[i](event.currentTarget.value);
+            //Email is exception because it sends ajax request and can't return the response
+            if(verifs[i].name == 'verifEmail')
+                verifs[i](event.currentTarget.value, input_containers[i].children[1]);
+            else{
+                err_msg = verifs[i](event.currentTarget.value);
 
-            if (!err_msg)
-                setInputImg(input_containers[i].children[1], check_src, 'Valid');
-            else
-                setInputImg(input_containers[i].children[1], cross_src, err_msg);
+                if (!err_msg)
+                    setInputImg(input_containers[i].children[1], check_src, 'Valid');
+                else
+                    setInputImg(input_containers[i].children[1], cross_src, err_msg);
+                }
         }
     document.getElementById('auth_form').onsubmit = (e) =>{
         Array.from(input_containers).forEach( (input_cont) =>{
@@ -51,25 +56,29 @@ function verifUsername(username){
         return 'No white spaces!';
 }
 
-//Find way to return response
-function verifEmail(email){
-    if (!email)
-        return 'Incomplete email!';
+function verifEmail(email, res_img){
+    if (!email){
+        setInputImg(res_img, cross_src, 'Incomplete email!');
+        return;
+    }
 
     let httpReq = new XMLHttpRequest();
-    let res;
+    //Sending ajax to verificate the email uniqness
     httpReq.open('POST', 'register/verif_email');
     httpReq.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     httpReq.send(JSON.stringify({'email': email}));
+
     httpReq.onreadystatechange = () => {
-        res = httpReq.responseText;
-        console.log(res);
+        const res = httpReq.responseText;
+        //Changing the the img dependent on response
+        if (res == 'OK')
+            setInputImg(res_img, check_src, 'Valid');
+        else
+            setInputImg(res_img, cross_src, res);
     }
-    return res;
 }
 
 function verifPassword(password){
-    console.log(password);
     if (!password)
         return "Incomplete password!";
 
