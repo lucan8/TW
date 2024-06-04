@@ -16,8 +16,11 @@
                     <h5>Daily Quests- 5xp each</h5>
                     <input type="text" placeholder="Quest Name" id="quest_name" name="quest_name">
                     <button type="submit" id="add_quest">Add quest</button>
+                    <div id="err_div"></div>
                     <ul id="quests_list">
-
+                        <% for (let quest of quests) { %>
+                            <li name="<%=quest%>"><%=quest%><button type="submit" class="remove_quest">Remove</button></li>
+                        <% } %>
                     </ul>
                 </article>
             </main>
