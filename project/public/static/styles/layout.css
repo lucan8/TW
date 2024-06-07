@@ -149,8 +149,7 @@ html{
     padding-right: 10%;
 
 }
-/*Make this with js (onclick) after presentation*/
-@media screen and (max-width < 600) and (max-height < 700){
+@media screen and (min-width : 300px) and (max-height : 700px){
     /*Changing layout of main to grid to support both columns and rows*/
     .layout_main{
         display: grid;
