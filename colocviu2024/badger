@@ -1,0 +1,52 @@
+window.onload = (e) =>{
+    const body = document.getElementById('body');
+    const counter = document.getElementById('counter');
+    localStorage.setItem('ctr', 0);
+    var ctr_frames = 1;
+    document.onkeydown = (e) =>{
+        console.log(e.key);
+        if (e.key == 'b'){
+            addImg('./resources/images/badger-1.png');
+            if (!document.getElementById('badger-sound')){
+                const audio = document.createElement('audio');
+                audio.id = 'badger-sound';
+                audio.src = './resources/badger.mp3';
+                body.appendChild(audio);
+            }
+        }
+        if (e.key == 'p')
+            document.getElementById('badger-sound').play();
+
+    }
+
+    function addImg(src){
+        let img = document.createElement('img');
+        if (src != './resources/images/mush.png'){
+            img.onclick = (e) =>{
+                setInterval(() =>{
+                    let id_int = setInterval(()=>{
+                        img.src = './resources/images/badger-' + ctr_frames++ + '.png';
+                        if (ctr_frames == 4){
+                            clearInterval(id_int);
+                            ctr_frames = 1;
+                        }
+                    }, 200);
+                let ctr = localStorage.getItem('ctr');
+                localStorage.setItem('ctr', parseInt(ctr) + 1);
+                counter.innerHTML =  'Coutner:' + localStorage.getItem('ctr');
+                if (parseInt(ctr) % 5 == 0 && ctr != 0)
+                    addImg('./resources/images/mush.png');
+                }, 1000);
+            }
+        }
+        img.src = src;
+        img.style.position = 'relative';
+        img.style.marginLeft = Math.random() * window.innerHeight +'px';
+        img.style.marginRight = Math.random() * window.innerHeight +'px';
+        img.style.marginTop = Math.random() * window.innerHeight +'px';
+        img.style.marginBottom = Math.random() * window.innerHeight +'px';
+
+        
+        body.appendChild(img);
+    }
+}

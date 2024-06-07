@@ -1,0 +1,27 @@
+window.onload = (e) =>{
+    const film_info_div = document.getElementById('film_info');
+    const tv = document.getElementById('tv');
+    const poster = document.getElementById('poster');
+    const desc = document.getElementById('desc');
+    const extra = document.getElementById('extra');
+
+    tv.onclick = (e) =>{
+        fetch('/film_resp').then(async (res) =>{
+            let choices = await res.json();
+            var keys = Object.keys(choices);
+            let resp = keys[ keys.length * Math.random() << 0];
+            let film = choices[resp];
+
+            poster.src = './resources/' + film.poster;
+            desc.textContent = 'Titlu: ' + film.title + ', Data: ' +  film.date + ', Ora: ' + film.time;
+            film_info_div.rating = film.rate;
+            film_info_div.starring = film.starring;
+        });
+    }
+    film_info_div.onmouseover = (e) =>{
+        extra.innerHTML = 'Rating: ' + film_info_div.rating + ", Starring: " + film_info_div.starring;
+    }
+    film_info_div.onmouseleave = (e) =>{
+        extra.innerHTML = '';
+    }
+}

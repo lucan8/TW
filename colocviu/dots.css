@@ -1,0 +1,10 @@
+button {
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    display: inline-block;
+}
+
+div{
+    position: fixed;
+}

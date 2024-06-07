@@ -1,0 +1,42 @@
+.container{
+    display: grid;
+    grid-template-areas: '1 0 0 . .'
+                         '. . 2 . .'
+                         '. . 3 . .'
+                         '. . 4 4 4'
+                         '. . . 5 .';
+    grid-template-columns: 75px 75px 75px 75px 75px;
+}
+div{
+    padding: 22px;
+}
+#1{
+    grid-area:1;
+    background-color: coral;
+}
+
+#0{
+    grid-area:0;
+}
+
+#2{
+    grid-area:2;
+}
+
+#3{
+    grid-area:3;
+}
+
+#4{
+    grid-area:4;
+}
+
+#5{
+    grid-area:5;
+    background-color: coral;
+}
+@media screen and (min-width >= 350) and (max-width <= 600){
+    .container{
+        display: block;
+    }
+}
