@@ -9,7 +9,7 @@
         <title>Task Hero-Home</title>
     </head>
     <body class="layout_body">
-        <%- include("layout/layout_header") %>
+        <%- include("layout/layout_header", {username: username, xp: xp}) %>
             <main class="layout_main">
                 <%- include("layout/layout_side")%>
                 <article class="layout_article">
