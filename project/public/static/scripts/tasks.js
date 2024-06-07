@@ -1,6 +1,5 @@
-//No magic numbers
-const XP_MULTIPLIER = 10;
-window.onload = (e) => {
+var XP_MULTIPLIER = 10;
+window.onload = (e) =>{
     const XP = document.getElementById("XP");
     const LVL = document.getElementById("LVL");
     setLVLBar(XP, LVL);
@@ -17,4 +16,3 @@ function setLVLBar(XP, LVL){
     XP.style.width = ((1.0 * XP.textContent / XP_goal.textContent * 100).
                                                 toFixed(2)).toString() + "%";
 }
-
