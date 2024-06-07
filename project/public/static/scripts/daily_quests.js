@@ -1,6 +1,11 @@
+var XP_MULTIPLIER = 10;
 window.onload = (e) =>{
+    const XP = document.getElementById("XP");
+    const LVL = document.getElementById("LVL");
+    setLVLBar(XP, LVL);
+    
     const add_quest = document.getElementById('add_quest');
-    const input_quest = document.getElementById('quest_name');
+    const input_quest = document.getElementById('quest_input');
     const quests_list = document.getElementById('quests_list');
     const err_div = document.getElementById('err_div');
 
@@ -33,10 +38,14 @@ window.onload = (e) =>{
             else{ //Creating new quest dynamically with js
                 const new_quest = document.createElement('li');
                 new_quest.setAttribute('name', input_quest.value);
-
-                const new_quest_text = document.createTextNode(input_quest.value);
-                new_quest.appendChild(new_quest_text);
+                new_quest.classList.add('quest')
                 
+                const quest_name_div = document.createElement('div');
+                quest_name_div.classList.add('quest_name');
+
+                const quest_name = document.createTextNode(input_quest.value);
+                quest_name_div.appendChild(quest_name);
+
                 //Creating remove quest btn
                 const remove_btn = document.createElement('button');
                 remove_btn.type = 'submit';
@@ -48,7 +57,8 @@ window.onload = (e) =>{
                 remove_btn.onclick = (ev) => {
                     removeQuest(ev.currentTarget);
                 };
-        
+                
+                new_quest.append(quest_name_div);
                 new_quest.appendChild(remove_btn);
                 quests_list.appendChild(new_quest);
             }
@@ -57,7 +67,7 @@ window.onload = (e) =>{
 
     function removeQuest(rem_btn){
         const quest = rem_btn.parentNode;
-        console.log(quest, quest.getAttribute("name"));
+        
         //Removing from database
         const httpReq = new XMLHttpRequest();
         httpReq.open('POST', '/daily_quests/remove');
@@ -70,6 +80,18 @@ window.onload = (e) =>{
         //Removing from page
         quest.parentNode.removeChild(quest);
     }
+}
+
+//Param: elements with is's 'xp' and 'lvl' 
+function setLVLBar(XP, LVL){
+    //Setting the LVL of the user
+    LVL.textContent = Math.floor(XP.textContent / XP_MULTIPLIER) + 1;
+    
+    //Setting up the xp bar's progress
+    let XP_goal = LVL.textContent * XP_MULTIPLIER;
+    //Percentage for the XP bar
+    XP.style.width = ((1.0 * XP.textContent / XP_goal.textContent * 100).
+                                                toFixed(2)).toString() + "%";
 }
 
 function capitalize(word){
